@@ -7,7 +7,7 @@ import numpy as np
 from typing import Dict
 import random
 
-from models.schemas import (
+from app.models.schemas import (
     BiosignalData, iFRSLayerResult, FrequencyBands,
     HRVFeatures, RhythmClassification
 )

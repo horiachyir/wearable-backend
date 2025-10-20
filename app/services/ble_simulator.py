@@ -9,7 +9,7 @@ from datetime import datetime
 from typing import Dict, Optional
 import random
 
-from models.schemas import BiosignalData, DeviceStatus
+from app.models.schemas import BiosignalData, DeviceStatus
 
 
 class BLESimulator:

@@ -6,7 +6,7 @@ from datetime import datetime
 from typing import Dict, List, Optional
 import uuid
 
-from models.schemas import SessionResponse, SessionType
+from app.models.schemas import SessionResponse, SessionType
 
 
 class SessionManager:

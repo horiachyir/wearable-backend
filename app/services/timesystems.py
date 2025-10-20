@@ -8,7 +8,7 @@ from datetime import datetime, time
 from typing import Dict, Optional
 import random
 
-from models.schemas import (
+from app.models.schemas import (
     BiosignalData, TimesystemsLayerResult, PatternType,
     CircadianPhase, PatternRecognition, CircadianAlignment
 )

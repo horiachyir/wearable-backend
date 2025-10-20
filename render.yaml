@@ -1,0 +1,37 @@
+services:
+  # Web Service - FastAPI Backend
+  - type: web
+    name: wearable-biosignal-backend
+    env: python
+    region: oregon # Change to your preferred region (oregon, frankfurt, singapore, ohio)
+    plan: free # Options: free, starter, standard, pro
+    branch: main # Git branch to deploy
+
+    # Build configuration
+    buildCommand: pip install -r requirements.txt
+
+    # Start command - CRITICAL for Render.com
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+
+    # Health check endpoint
+    healthCheckPath: /api/v1/health
+
+    # Environment variables
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.12
+      - key: PORT
+        value: 10000
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: info
+
+    # Auto-deploy configuration
+    autoDeploy: true
+
+    # Disk configuration (optional, only if you need persistent storage)
+    # disk:
+    #   name: data
+    #   mountPath: /data
+    #   sizeGB: 1

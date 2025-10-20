@@ -7,7 +7,7 @@ import numpy as np
 from typing import Dict, List
 import random
 
-from models.schemas import (
+from app.models.schemas import (
     BiosignalData, ClarityLayerResult, QualityMetrics,
     SignalQuality
 )

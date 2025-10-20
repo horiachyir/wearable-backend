@@ -15,7 +15,7 @@ import logging
 from datetime import datetime
 from typing import List
 
-from models.schemas import (
+from app.models.schemas import (
     ConnectionRequest, ConnectionResponse,
     StreamDataResponse, PredictionResponse,
     SessionCreateRequest, SessionResponse,
@@ -26,13 +26,13 @@ from models.schemas import (
     CircadianAlignment, WellnessAssessment, SignalQuality,
     PatternType, CircadianPhase, RhythmClassification
 )
-from services.ble_simulator import BLESimulator
-from services.timesystems import TimesystemsLayer
-from services.ifrs import iFRSLayer
-from services.clarity import ClarityLayer
-from services.lia_integration import LIAEngine
-from services.session_manager import SessionManager
-from utils.logger import setup_logger, get_processing_logger
+from app.services.ble_simulator import BLESimulator
+from app.services.timesystems import TimesystemsLayer
+from app.services.ifrs import iFRSLayer
+from app.services.clarity import ClarityLayer
+from app.services.lia_integration import LIAEngine
+from app.services.session_manager import SessionManager
+from app.utils.logger import setup_logger, get_processing_logger
 
 # Setup logging
 logger = setup_logger(__name__)
@@ -643,10 +643,12 @@ async def demonstrate_layers():
 # ============================================================================
 
 if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 8000))
     uvicorn.run(
-        "main:app",
+        "app.main:app",
         host="0.0.0.0",
-        port=8000,
-        reload=True,
+        port=port,
+        reload=False,  # Disable reload in production
         log_level="info"
     )

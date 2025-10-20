@@ -4,23 +4,26 @@ FastAPI-based backend for processing biosignals through proprietary Reconnect la
 
 ## Quick Start
 
-### 1. Install Dependencies
+### Local Development
+
+#### 1. Install Dependencies
 
 ```bash
-cd backend
 pip install -r requirements.txt
 ```
 
-### 2. Run the Server
+#### 2. Run the Server
+
+From the project root:
 
 ```bash
-python main.py
+python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
-Or using uvicorn directly:
+Or using the Python module directly:
 
 ```bash
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+python3 -m app.main
 ```
 
 ### 3. Access the API
@@ -29,10 +32,10 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 - **Swagger UI** (Interactive Docs): http://localhost:8000/docs
 - **ReDoc**: http://localhost:8000/redoc
 
-### 4. Run Demo Client
+### 3. Run Demo Client
 
 ```bash
-python demo_client.py
+python3 app/demo_client.py
 ```
 
 This will demonstrate:
@@ -41,6 +44,22 @@ This will demonstrate:
 - Processing through all three proprietary layers
 - LIA health insights
 - Continuous streaming mode
+
+## Deployment to Render.com
+
+### Quick Deploy (5 Minutes)
+
+See [QUICKSTART_RENDER.md](QUICKSTART_RENDER.md) for step-by-step deployment instructions.
+
+**TL;DR:**
+1. Push code to GitHub
+2. Create new Blueprint on Render.com
+3. Connect repository (render.yaml auto-detected)
+4. Deploy!
+
+### Detailed Deployment Guide
+
+For comprehensive deployment instructions, troubleshooting, and best practices, see [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md).
 
 ## Key Features
 
