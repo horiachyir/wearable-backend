@@ -1,0 +1,376 @@
+{
+  "info": {
+    "name": "Wearable Biosignal Analysis API",
+    "description": "Complete API collection for testing the Wearable Biosignal Analysis System with Timesystems™, iFRS™, and Clarity™ layers",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "session_id",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "System",
+      "item": [
+        {
+          "name": "Root - API Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": ["{{base_url}}"],
+              "path": [""]
+            },
+            "description": "Get API information and available endpoints"
+          },
+          "response": []
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/health",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "health"]
+            },
+            "description": "Check system health and service status"
+          },
+          "response": []
+        }
+      ],
+      "description": "System health and information endpoints"
+    },
+    {
+      "name": "Connection",
+      "item": [
+        {
+          "name": "Connect Mobile App",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.session_id) {",
+                  "    pm.collectionVariables.set('session_id', jsonData.session_id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device_id\": \"MOBILE_APP_TEST_001\",\n  \"device_type\": \"mobile_app\",\n  \"app_version\": \"1.0.0\",\n  \"user_id\": \"test_user_123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/connect",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "connect"]
+            },
+            "description": "Connect mobile client to backend and initiate BLE simulation"
+          },
+          "response": []
+        },
+        {
+          "name": "Connect Bracelet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device_id\": \"BRACELET_001\",\n  \"device_type\": \"bracelet\",\n  \"app_version\": \"2.1.4\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/connect",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "connect"]
+            },
+            "description": "Connect wearable bracelet device"
+          },
+          "response": []
+        },
+        {
+          "name": "Connect Clip",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device_id\": \"CLIP_SENSOR_001\",\n  \"device_type\": \"clip\",\n  \"app_version\": \"1.5.2\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/connect",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "connect"]
+            },
+            "description": "Connect wearable clip sensor"
+          },
+          "response": []
+        }
+      ],
+      "description": "Device connection endpoints"
+    },
+    {
+      "name": "Data Streaming",
+      "item": [
+        {
+          "name": "Get Stream Data",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/stream",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "stream"]
+            },
+            "description": "Get current biosignal data processed through all layers (Clarity™, iFRS™, Timesystems™, LIA)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Prediction",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/predict",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "predict"]
+            },
+            "description": "Get latest health condition prediction from LIA engine"
+          },
+          "response": []
+        }
+      ],
+      "description": "Real-time data streaming endpoints"
+    },
+    {
+      "name": "Sessions",
+      "item": [
+        {
+          "name": "Create Workout Session",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.session_id) {",
+                  "    pm.collectionVariables.set('session_id', jsonData.session_id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device_id\": \"MOBILE_APP_TEST_001\",\n  \"user_id\": \"test_user_123\",\n  \"session_type\": \"workout\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/sessions",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "sessions"]
+            },
+            "description": "Create a new workout monitoring session"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Meditation Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device_id\": \"MOBILE_APP_TEST_001\",\n  \"user_id\": \"test_user_123\",\n  \"session_type\": \"meditation\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/sessions",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "sessions"]
+            },
+            "description": "Create a meditation session"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Sleep Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device_id\": \"MOBILE_APP_TEST_001\",\n  \"user_id\": \"test_user_123\",\n  \"session_type\": \"sleep\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/sessions",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "sessions"]
+            },
+            "description": "Create a sleep monitoring session"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Session Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/sessions/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "sessions", "{{session_id}}"]
+            },
+            "description": "Get details of a specific session"
+          },
+          "response": []
+        }
+      ],
+      "description": "Session management endpoints"
+    },
+    {
+      "name": "Demonstration",
+      "item": [
+        {
+          "name": "Layer Processing Demo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/demo/layers",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "demo", "layers"]
+            },
+            "description": "Comprehensive demonstration showing how data flows through all proprietary layers with detailed processing information"
+          },
+          "response": []
+        },
+        {
+          "name": "Processing Logs (Last 50)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/logs/processing?limit=50",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "logs", "processing"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "50"
+                }
+              ]
+            },
+            "description": "Get recent processing logs showing layer activity"
+          },
+          "response": []
+        },
+        {
+          "name": "Processing Logs (Last 200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/logs/processing?limit=200",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "logs", "processing"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "200"
+                }
+              ]
+            },
+            "description": "Get extensive processing logs"
+          },
+          "response": []
+        }
+      ],
+      "description": "Demonstration endpoints for showcasing system capabilities"
+    },
+    {
+      "name": "Interactive API Docs",
+      "item": [
+        {
+          "name": "Swagger UI",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/docs",
+              "host": ["{{base_url}}"],
+              "path": ["docs"]
+            },
+            "description": "Open interactive Swagger UI documentation (open in browser)"
+          },
+          "response": []
+        },
+        {
+          "name": "ReDoc",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/redoc",
+              "host": ["{{base_url}}"],
+              "path": ["redoc"]
+            },
+            "description": "Open ReDoc documentation (open in browser)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Links to interactive API documentation"
+    }
+  ]
+}
